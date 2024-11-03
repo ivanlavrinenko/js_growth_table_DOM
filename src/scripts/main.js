@@ -21,34 +21,42 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function appendRow() {
-    const row = table.insertRow();
+    if (table.rows.length < MAX) {
+      const row = table.insertRow();
 
-    for (let i = 0; i < table.rows[0].cells.length; i++) {
-      row.insertCell();
+      for (let i = 0; i < table.rows[0].cells.length; i++) {
+        row.insertCell();
+      }
+
+      updateButtons();
     }
-
-    updateButtons();
   }
 
   function removeRow() {
-    table.deleteRow(-1);
-    updateButtons();
+    if (table.rows.length > MIN) {
+      table.deleteRow(-1);
+      updateButtons();
+    }
   }
 
   function appendColumn() {
-    Array.from(table.rows).forEach((row) => {
-      row.insertCell();
-    });
+    if (table.rows[0].cells.length < MAX) {
+      Array.from(table.rows).forEach((row) => {
+        row.insertCell();
+      });
 
-    updateButtons();
+      updateButtons();
+    }
   }
 
   function removeColumn() {
-    Array.from(table.rows).forEach((row) => {
-      row.deleteCell(-1);
-    });
+    if (table.rows[0].cells.length > MIN) {
+      Array.from(table.rows).forEach((row) => {
+        row.deleteCell(-1);
+      });
 
-    updateButtons();
+      updateButtons();
+    }
   }
 
   appendRowButton.addEventListener('click', appendRow);
